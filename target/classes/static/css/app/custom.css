@@ -1,0 +1,13 @@
+.card {
+  min-height: 90vh;
+  margin-top: 2vh;
+}
+ul.pagination {
+  margin: 0;
+}
+select.ng-empty {
+  color:darkgray;
+}
+.chart {
+  height: 35vh;
+}

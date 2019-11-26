@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="panel panel-primary card">
+        <div class="panel-heading">Dashboards</div>
+        <div class="panel-body" style="max-height:90vh;overflow:auto">
+            <div class="row">
+                <div class="col-md-7">
+                    <div ac-chart="'line'"
+                        ac-data="vm.fonteMediaNotas.data"
+                        ac-config="vm.fonteMediaNotas.config"
+                        class="chart"></div>
+                </div>
+                <div class="col-md-5">
+                    <div ac-chart="'bar'"
+                        ac-data="vm.fonteFaixaEtaria.data"
+                        ac-config="vm.fonteFaixaEtaria.config"
+                        class="chart"></div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-5">
+                    <div ac-chart="'pie'"
+                        ac-data="vm.fonteAprovacoes.data"
+                        ac-config="vm.fonteAprovacoes.config"
+                        class="chart"></div>
+                </div>
+                <div class="col-md-7">
+                    <div ac-chart="'pie'"
+                         ac-data="vm.fontePredominancia.data"
+                         ac-config="vm.fontePredominancia.config"
+                         class="chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

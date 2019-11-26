@@ -1,0 +1,2 @@
+ALTER TABLE aluno DROP COLUMN IF EXISTS ativo;
+ALTER TABLE aluno ADD COLUMN ativo boolean NOT NULL DEFAULT true;

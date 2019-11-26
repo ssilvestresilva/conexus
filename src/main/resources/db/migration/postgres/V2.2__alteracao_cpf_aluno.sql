@@ -1,0 +1,1 @@
+ALTER TABLE aluno ALTER COLUMN cpf TYPE character varying(11);

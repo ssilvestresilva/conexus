@@ -1,0 +1,112 @@
+<div class="container-fluid">
+    <div class="panel panel-primary card">
+        <div class="panel-heading">Cadastro</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-xs-12 col-md-1">
+                    <label for="id">Id</label>
+                    <input type="text"
+                           class="form-control"
+                           id="id"
+                           ng-model="vm.cadastro.id"
+                           disabled readonly>
+                </div>
+                <div class="form-group col-xs-12 col-md-5">
+                    <label for="descricao">Descrição</label>
+                    <input type="text"
+                           class="form-control"
+                           id="descricao"
+                           ng-model="vm.cadastro.descricao"
+                           placeholder="Descrição">
+                </div>
+                <div class="form-group col-xs-12 col-md-3">
+                    <label for="segmento">Área de Conhecimento</label>
+                    <select id="segmento"
+                            name="segmento"
+                            class="form-control"
+                            ng-model="vm.cadastro.segmento"
+                            placeholder="Segmento">
+
+                        <option value="" disabled>Selecionar...</option>
+
+                        <option ng-repeat="option in vm.areasDeConhecimento.lista"
+                                value="{{option.cod}}">{{option.descricao}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-xs-12 col-md-3">
+                    <label for="periodo">Período</label>
+                    <select id="periodo" name="periodo" class="form-control" ng-model="vm.cadastro.periodo" placeholder="Período">
+                        <option value="" disabled>Selecionar...</option>
+                        <option value="1º/2018">1º/2018</option>
+                        <option value="2º/2018">2º/2018</option>
+                        <option value="1º/2019">1º/2019</option>
+                        <option value="2º/2019">2º/2019</option>
+                        <option value="1º/2020">1º/2020</option>
+                        <option value="2º/2020">2º/2020</option>
+                        <option value="1º/2021">1º/2021</option>
+                        <option value="2º/2021">2º/2021</option>
+                        <option value="1º/2022">1º/2022</option>
+                        <option value="2º/2022">2º/2022</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="container-fluid">
+                    <button type="submit"
+                            ng-click="vm.salvar(vm.cadastro, vm.recarregar)"
+                            class="btn btn-success"
+                            ng-disabled="vm.desabilitarBtnSalvar()">Salvar</button>
+
+                    <button type="submit"
+                            ng-click="vm.limparCadastro()"
+                            class="btn btn-default">Cancelar</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-heading">Listagem</div>
+        <div class="panel-body" style="max-height:60vh;overflow:auto">
+            <div class="table-responsive">
+                <table ng-table="vm.tableParams" class="table table-striped table-hover table-condensed" show-filter="true">
+                    <tr ng-repeat="curso in $data">
+                        <td title="'Id'"
+                            filter="{ id: 'number'}"
+                            sortable="'id'">
+                            {{curso.id}}
+                        </td>
+                        <td title="'Descrição'"
+                            filter="{ descricao: 'text'}"
+                            sortable="'descricao'">
+                            {{curso.descricao}}
+                        </td>
+                        <td title="'Segmento'"
+                            filter="{ segmento: 'text'}"
+                            sortable="'segmento'">
+                            {{vm.obterSegmento(curso.segmento)}}
+                        </td>
+                        <td title="'Período de Realização'"
+                            filter="{ periodo: 'text'}"
+                            sortable="'periodo'">
+                            {{curso.periodo}}
+                        </td>
+                        <td title="'Status'">
+                            <switch name="onOff"
+                                    ng-model="curso.ativo"
+                                    on="Ativo"
+                                    off="Inativo"
+                                    ng-change="vm.atualizarStatus(curso)"></switch>
+                        </td>
+                        <td title="'Editar'">
+                            <button class="btn btn-info btn-sm"
+                                    ng-click="vm.editar(curso)">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</div>

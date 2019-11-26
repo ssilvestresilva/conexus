@@ -1,0 +1,122 @@
+<div class="container-fluid">
+    <div class="panel panel-primary card">
+        <div class="panel-heading">Integração</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="bs-callout bs-callout-info">
+                        <div class="row">
+                            <div class="form-group col-md-2 text-center">
+                                <p><label>Receber</label></p>
+                                <button type="submit"
+                                        ng-click="vm.receberDados()"
+                                        class="btn btn-primary center-block"
+                                        ng-disabled="vm.receb.statusIntegracao === 'Integrando...'">
+                                    <em class="glyphicon glyphicon-cloud-download"></em>    
+                                </button>
+                            </div>
+                            <div class="form-group col-md-7">
+                                <p><label for="progresso">Progresso</label></p>
+                                <div class="progress-container">
+                                    <div class="progress progress-striped" ng-class="{active: vm.receb.statusIntegracao === 'Integrando...'}">
+                                        <div class="progress-bar progress-bar-success"
+                                             ng-style="{ width: vm.receb.percentualProgresso + '%' }">
+                                            <span>{{vm.receb.percentualProgresso}}%</span>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3 text-center">
+                                <p><label for="status">Status</label></p>
+                                <span class="label label-default center-block" ng-if="vm.receb.statusIntegracao === 'Aguardando'">
+                                    {{vm.receb.statusIntegracao}}
+                                </span>
+                                <span class="label label-warning center-block" ng-if="vm.receb.statusIntegracao === 'Integrando...'">
+                                    {{vm.receb.statusIntegracao}}
+                                </span>
+                                <span class="label label-success center-block" ng-if="vm.receb.statusIntegracao === 'Concluído'">
+                                    {{vm.receb.statusIntegracao}}
+                                </span>
+                                <span class="label label-danger center-block" ng-if="vm.receb.statusIntegracao === 'ERRO'">
+                                    {{vm.receb.statusIntegracao}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="bs-callout bs-callout-info">
+                        <div class="row">
+                            <div class="form-group col-md-2 text-center">
+                                <p><label>Enviar</label></p>
+                                <button type="submit"
+                                        ng-click="vm.enviarDados()"
+                                        class="btn btn-primary center-block"
+                                        ng-disabled="vm.envio.statusIntegracao === 'Integrando...'">
+                                    <em class="glyphicon glyphicon-send"></em>    
+                                </button>
+                            </div>
+                            <div class="form-group col-md-7">
+                                <p><label for="progresso">Progresso</label></p>
+                                <div class="progress-container">
+                                        <div class="progress progress-striped" ng-class="{active: vm.envio.statusIntegracao === 'Integrando...'}">
+                                        <div class="progress-bar progress-bar-success"
+                                             ng-style="{ width: vm.envio.percentualProgresso + '%' }">
+                                            <span>{{vm.envio.percentualProgresso}}%</span>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3 text-center">
+                                <p><label for="status">Status</label></p>
+                                <span class="label label-default center-block" ng-if="vm.envio.statusIntegracao === 'Aguardando'">
+                                    {{vm.envio.statusIntegracao}}
+                                </span>
+                                <span class="label label-warning center-block" ng-if="vm.envio.statusIntegracao === 'Integrando...'">
+                                    {{vm.envio.statusIntegracao}}
+                                </span>
+                                <span class="label label-success center-block" ng-if="vm.envio.statusIntegracao === 'Concluído'">
+                                    {{vm.envio.statusIntegracao}}
+                                </span>
+                                <span class="label label-danger center-block" ng-if="vm.envio.statusIntegracao === 'ERRO'">
+                                    {{vm.envio.statusIntegracao}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-heading">Censo Escolar</div>
+        <div class="panel-body" style="max-height:55vh;overflow:auto">
+            <div class="table-responsive">
+                <table ng-table="vm.tableParams" class="table table-striped table-hover table-condensed">
+                    <tr ng-repeat="item in $data">
+                        <td title="'Aluno'">
+                            {{item.aluno}}
+                        </td>
+                        <td title="'Curso'">
+                            {{item.curso}}
+                        </td>
+                        <td title="'Instituição'">
+                            {{item.instituicao}}
+                        </td>
+                        <td title="'Período de Realização'">
+                            {{item.periodo}}
+                        </td>
+                        <td title="'Resultado'">
+                            {{item.resultado | number: 2}}
+                        </td>
+                        <td title="'Data Inclusão'">
+                            {{item.dtaCriacao | date :  'dd/MM/yyyy HH:mm'}}
+                        </td>
+                        <td title="'Ref. Base de Dados'">
+                            {{item.lastDataBase | date :  'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
