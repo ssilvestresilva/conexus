@@ -20,6 +20,7 @@
 /home/silvestresilva/dev/src/conexus/src/main/java/br/pucminas/api/services/ResultadoService.java
 /home/silvestresilva/dev/src/conexus/src/main/java/br/pucminas/api/services/UsuarioService.java
 /home/silvestresilva/dev/src/conexus/src/main/java/br/pucminas/api/dtos/ResultadoDto.java
+/home/silvestresilva/dev/src/conexus/src/main/java/br/pucminas/api/entities/Produto.java
 /home/silvestresilva/dev/src/conexus/src/main/java/br/pucminas/api/security/dto/TokenDto.java
 /home/silvestresilva/dev/src/conexus/src/main/java/br/pucminas/api/entities/FonteAprovacoes.java
 /home/silvestresilva/dev/src/conexus/src/main/java/br/pucminas/api/controllers/MyErrorController.java

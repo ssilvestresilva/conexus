@@ -3,6 +3,7 @@ br/pucminas/api/services/impl/ResultadoServiceImpl.class
 br/pucminas/api/entities/HistoricoIntegracao.class
 br/pucminas/api/repositories/AlunoRepository.class
 br/pucminas/api/constants/Validador.class
+br/pucminas/api/entities/Produto.class
 br/pucminas/api/services/impl/AlunoServiceImpl.class
 br/pucminas/api/constants/Mensagem$ERRO.class
 br/pucminas/api/repositories/CursoRepository.class
