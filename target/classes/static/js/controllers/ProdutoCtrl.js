@@ -1,5 +1,5 @@
 'use strict';
-var produtoCtrl = function(NgTableParams, produtoSrv, cursoSrv, toaster) {
+var produtoCtrl = function(NgTableParams, produtoSrv, toaster) {
     var vm = this;
     vm.limparCadastro = limparCadastro;
     vm.recarregar = recarregar;
@@ -9,7 +9,6 @@ var produtoCtrl = function(NgTableParams, produtoSrv, cursoSrv, toaster) {
     vm.atualizarStatus = atualizarStatus;
 
     limparCadastro();
-    carregarCursos();
 
     vm.tableParams = new NgTableParams({ count: 1 },
         {
@@ -17,8 +16,8 @@ var produtoCtrl = function(NgTableParams, produtoSrv, cursoSrv, toaster) {
             getData: function(params) {
                 var ngParams = {
                     page: params.page() - 1,
-                    size: 2,
-                    sort: 'id,DESC'
+                    size: 10,
+                    sort: 'id,ASC'
                 }
 
                 angular.extend(ngParams, params.filter());
@@ -26,7 +25,8 @@ var produtoCtrl = function(NgTableParams, produtoSrv, cursoSrv, toaster) {
                 return produtoSrv.listar(ngParams).then(function(res) {
                     params.total(res.data.totalPages);
                     var produtos = res.data.content;
-                    produtos.forEach(a => a.dtaNascimento = dayjs(a.dtaNascimento).format('DD/MM/YYYY'));
+                    produtos.forEach(a => a.dtaCriacao = dayjs(a.dtaCriacao).format('DD/MM/YYYY'));
+                    produtos.forEach(a => a.dtaAtualizacao = dayjs(a.dtaAtualizacao).format('DD/MM/YYYY'));
                     return produtos;
                 });
             }
@@ -34,17 +34,15 @@ var produtoCtrl = function(NgTableParams, produtoSrv, cursoSrv, toaster) {
     );
 
     function salvar(cadastro, successCb) {
-        configurarStatusPadrao(cadastro);
-
-        cadastro.cursos.forEach((c, idx) => {
-            if (typeof c === 'string' && !isNaN(c)) {
-                cadastro.cursos[idx] = new Object({id: Number(c)});
-            }
-        });
+        if(!cadastro.id) {
+            toaster.pop('error', 'Selecione um produto para edição');
+            return;
+        }
 
         produtoSrv['atualizar'](cadastro).then(function() {
             if (successCb) {
                 successCb();
+                limparCadastro();
             }
             toaster.pop('success', 'Registro salvo com sucesso');
         }, function(res) {
@@ -52,51 +50,30 @@ var produtoCtrl = function(NgTableParams, produtoSrv, cursoSrv, toaster) {
         });
     }
 
-    function configurarStatusPadrao(cadastro) {
-        if (cadastro.ativo === undefined) {
-            cadastro.ativo = true;
-        }
-    }
-
-    function limparCadastro() {
-        vm.cadastro = {
-            cursos: []
-        };
-    }
-
     function recarregar() {
         vm.tableParams.page(1);
         vm.tableParams.reload();
-        limparCadastro();
     }
 
     function desabilitarBtnSalvar() {
-        return !vm.cadastro.nome ||
-                !vm.cadastro.cpf ||
-                !vm.cadastro.dtaNascimento ||
-                !vm.cadastro.endereco ||
-                !vm.cadastro.cursos ||
-                !vm.cadastro.cursos.length;
+        return !vm.cadastro.vlrAdmin;
         
     }
 
-    function editar(curso) {
-        limparCadastro();
-        vm.cadastro = angular.copy(curso);
+    function limparCadastro() {
+        vm.cadastro = {};
     }
 
-    function carregarCursos() {
-        cursoSrv.listarTodos().then(function(res) {
-            vm.cursos = res.data;
-        });
+    function editar(produto) {
+        vm.cadastro = angular.copy(produto);
     }
 
-    function atualizarStatus(curso) {
-        salvar(curso);
+    function atualizarStatus(produto) {
+        salvar(produto);
     }
   
 };
 
-produtoCtrl.$inject = ['NgTableParams', 'ProdutoSrv', 'CursoSrv', 'toaster'];
+produtoCtrl.$inject = ['NgTableParams', 'ProdutoSrv', 'toaster'];
 
-app.controller('Produtotrl', produtoCtrl);
+app.controller('ProdutoCtrl', produtoCtrl);

@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS curso_aluno;
 DROP TABLE IF EXISTS curso;
 DROP TABLE IF EXISTS resultado;
+DROP TABLE IF EXISTS resultado_produto;
 DROP TABLE IF EXISTS aluno;
 DROP TABLE IF EXISTS usuario;
 DROP TABLE IF EXISTS produto;
@@ -69,4 +70,16 @@ CREATE TABLE IF NOT EXISTS produto (
 	ativo bool NOT NULL DEFAULT false,
 	CONSTRAINT produto_cod_produto UNIQUE (cod_produto),
 	CONSTRAINT produto_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS resultado_produto (
+	id SERIAL PRIMARY KEY,
+	id_produto INTEGER NOT NULL,
+	resultado DECIMAL NOT NULL DEFAULT 0.0,
+	dta_criacao TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+	last_data_base date NOT NULL,
+	CONSTRAINT fk_produto FOREIGN KEY (id_produto)
+		REFERENCES produto (id) MATCH SIMPLE
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION
 );

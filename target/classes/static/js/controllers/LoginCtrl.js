@@ -15,7 +15,7 @@ var loginCtrl = function($http, $state, $rootScope, AuthSrv, loginSrv, toaster) 
                 AuthSrv.user = res.data.data.user;
                 $rootScope.$broadcast('LoginSuccessful');
                 //$location.path('/dashboard');
-                $state.go('dashboard');
+                $state.go('produto');
             } else {
                 toaster.pop('error', 'Falha ao Autenticar !');
             }

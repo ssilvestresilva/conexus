@@ -12,23 +12,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name = "resultado")
-public class Resultado implements Serializable {
+@Table(name = "resultado_produto")
+public class ResultadoProduto implements Serializable {
 
 	private static final long serialVersionUID = -713545263599116642L;
 
 	private Long id;
-	private Aluno aluno;
-	private String curso;
-	private String instituicao;
-	private String periodo;
 	private Produto produto;
 	private BigDecimal resultado;
 	
@@ -48,18 +44,8 @@ public class Resultado implements Serializable {
 		this.id = id;
 	}
 
-	//@ManyToOne(fetch = FetchType.EAGER)
-	@ManyToOne
-	@JoinColumn(name = "id_aluno")
-	public Aluno getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
-	@Column(name = "produto", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "id_produto")
 	public Produto getProduto() {
 		return produto;
 	}
@@ -68,33 +54,6 @@ public class Resultado implements Serializable {
 		this.produto = produto;
 	}
 	
-	@Column(name = "curso", nullable = false)
-	public String getCurso() {
-		return curso;
-	}
-
-	public void setCurso(String curso) {
-		this.curso = curso;
-	}
-
-	@Column(name = "instituicao", nullable = false)
-	public String getInstituicao() {
-		return instituicao;
-	}
-
-	public void setInstituicao(String instituicao) {
-		this.instituicao = instituicao;
-	}
-
-	@Column(name = "periodo", nullable = false)
-	public String getPeriodo() {
-		return periodo;
-	}
-
-	public void setPeriodo(String periodo) {
-		this.periodo = periodo;
-	}
-
 	@Column(name = "resultado", nullable = false)
 	public BigDecimal getResultado() {
 		return resultado;
@@ -130,8 +89,7 @@ public class Resultado implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Resultado [id=" + id + ", aluno=" + aluno + ", curso=" + curso + ", instituicao=" + instituicao
-				+ ", periodo=" + periodo + ", resultado=" + resultado + "]";
+		return "Resultado [id=" + id + ", produto=" + produto + resultado + "]";
 	}
 
 }

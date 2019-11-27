@@ -72,7 +72,7 @@ public class IntegracaoController {
 	
 	private ResultadoDto fromResultado(Resultado resultado) {
 		ResultadoDto resultadoDto = new ResultadoDto();
-		resultadoDto.setAluno(resultado.getAluno().getNome());
+//		resultadoDto.setAluno(resultado.getAluno().getNome());
 		resultadoDto.setCurso(resultado.getCurso());
 		resultadoDto.setInstituicao(resultado.getInstituicao());
 		resultadoDto.setPeriodo(resultado.getPeriodo());
@@ -95,7 +95,7 @@ public class IntegracaoController {
 		}
 
 		Resultado resultado = new Resultado();
-		resultado.setAluno(aluno);
+//		resultado.setAluno(aluno);
 		resultado.setCurso(integracao.getCurso());
 		resultado.setInstituicao(integracao.getInstituicao());
 		resultado.setPeriodo(integracao.getPeriodo());

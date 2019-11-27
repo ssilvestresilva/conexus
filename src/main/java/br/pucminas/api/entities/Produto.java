@@ -28,22 +28,17 @@ public class Produto implements Serializable {
 	private static final long serialVersionUID = 2988578591926756875L;
 
 	private Long id;
-	private String nome;
-	private String cpf;
-	private Date dtaNascimento;
-	private String endereco;
+	private Integer codProduto;
+	private String descricao;
+	private Double vlrDistribuidor;
+	private Double vlrAdmin;
+	private Integer quantidade;
+	private Date dtaCriacao;
+	private Date dtaAtualizacao;
 	private Boolean ativo;
-//	id serial NOT NULL,
-//	cod_produto int4 NOT NULL,
-//	descricao varchar(100) NOT NULL,
-//	vlr_distribuidor NUMERIC(5,2) NULL DEFAULT 0,
-//	vlr_admin NUMERIC(5,2) NULL DEFAULT 0,
-//	quantidade int4 NOT NULL,
-//	dta_criacao TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-//	dta_atualizacao TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-//	ativo bool NOT NULL DEFAULT false,
+	
 	@JsonIgnore
-	private Set<Resultado> resultados = new HashSet<>();
+	private Set<ResultadoProduto> resultados = new HashSet<>();
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -56,52 +51,79 @@ public class Produto implements Serializable {
 	}
 	
 	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	public Set<Resultado> getResultados() {
+	public Set<ResultadoProduto> getResultados() {
 		return resultados;
 	}
 
-	public void setResultados(Set<Resultado> resultados) {
+	public void setResultados(Set<ResultadoProduto> resultados) {
 		this.resultados = resultados;
 	}
 
 	@NaturalId
-	@Column( name = "nome", nullable = false)
-	public String getNome() {
-		return nome;
+	@Column( name = "cod_produto", unique = true, nullable = false)
+	public Integer getCodProduto() {
+		return codProduto;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setCodProduto(Integer codProduto) {
+		this.codProduto = codProduto;
 	}
 
-	@Column( name = "cpf", unique = true, nullable = false)
-	public String getCpf() {
-		return cpf;
+	@Column( name = "descricao", nullable = false)
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	@Column( name = "dta_nascimento", nullable = false)
-	public Date getDtaNascimento() {
-		return dtaNascimento;
+	@Column( name = "vlr_distribuidor")
+	public Double getVlrDistribuidor() {
+		return vlrDistribuidor;
 	}
 
-	public void setDtaNascimento(Date dtaNascimento) throws Exception {
-		this.dtaNascimento = dtaNascimento;
+	public void setVlrDistribuidor(Double vlrDistribuidor) {
+		this.vlrDistribuidor = vlrDistribuidor;
 	}
 
-	@Column( name = "endereco", nullable = false )
-	public String getEndereco() {
-		return endereco;
+	@Column( name = "vlr_admin")
+	public Double getVlrAdmin() {
+		return vlrAdmin;
 	}
 
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
+	public void setVlrAdmin(Double vlrAdmin) {
+		this.vlrAdmin = vlrAdmin;
 	}
-	
-	@Column( name = "ativo", nullable = false )
+
+	@Column( name = "quantidade", nullable = false)
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	@Column( name = "dta_criacao", nullable = false)
+	public Date getDtaCriacao() {
+		return dtaCriacao;
+	}
+
+	public void setDtaCriacao(Date dtaCriacao) throws Exception {
+		this.dtaCriacao = dtaCriacao;
+	}
+
+	@Column( name = "dta_atualizacao", nullable = false)
+	public Date getDtaAtualizacao() {
+		return dtaAtualizacao;
+	}
+
+	public void setDtaAtualizacao(Date dtaAtualizacao) throws Exception {
+		this.dtaAtualizacao = dtaAtualizacao;
+	}
+
+	@Column( name = "ativo", nullable = false)
 	public Boolean getAtivo() {
 		return ativo;
 	}
@@ -109,36 +131,51 @@ public class Produto implements Serializable {
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
-
 	public Produto comId(Long id) {
 		this.setId(id);
 		return this;
 	}
 	
-	public Produto comNome(String nome) {
-		this.setNome(nome);
+	public Produto comCodProduto(Integer codProduto) {
+		this.setCodProduto(codProduto);
 		return this;
 	}
 	
-	public Produto comCpf(String cpf) {
-		this.setCpf(cpf);
+	public Produto comDescricao(String descricao) {
+		this.setDescricao(descricao);
+		return this;
+	}
+
+	public Produto comVlrDistribuidor(Double vlrDistribuidor) {
+		this.setVlrDistribuidor(vlrDistribuidor);
 		return this;
 	}
 	
-	public Produto comDtaNascimento(String dtaNascimento) throws Exception {
-		this.setDtaNascimento(Utils.converterDataLocal(dtaNascimento));
+	public Produto comVlrAdmin(Double vlrAdmin) {
+		this.setVlrAdmin(vlrAdmin);
 		return this;
 	}
 	
-	public Produto comEndereco(String endereco) {
-		this.setEndereco(endereco);
+	public Produto comDtaCriacao(String dtaCriacao) throws Exception {
+		this.setDtaCriacao(Utils.converterDataLocal(dtaCriacao));
+		return this;
+	}
+
+	public Produto comDtaAtualizacao(String dtaAtualizacao) throws Exception {
+		this.setDtaAtualizacao(Utils.converterDataLocal(dtaAtualizacao));
+		return this;
+}
+	
+	public Produto comQuantidade(Integer quantidade) {
+		this.setQuantidade(quantidade);
 		return this;
 	}
 
 	@Override
 	public String toString() {
-		return "Aluno [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", dtaNascimento=" + dtaNascimento
-				+ ", endereco=" + endereco + "]";
+		return "Produto [id=" + id + ", codProduto=" + codProduto + ", descricao=" 
+	+ descricao + ", vlrDistribuidor=" + vlrDistribuidor + ", vlrAdmin=" + vlrAdmin +
+	", + quantidade=" + quantidade + "]";
 	}
 
 }
