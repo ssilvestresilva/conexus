@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <div class="panel panel-primary card">
+        <div class="panel-heading">Compras Realizadas</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table ng-table="vm.tableParams" class="table table-striped table-hover table-condensed" show-filter="true">
+                    <tr ng-repeat="compras in $data">
+                        <td title="'Id'"
+                            filter="{ id: 'number'}"
+                            sortable="'id'">
+                            {{compras.id}}
+                        </td>
+                        <td title="'Cod. Compra'"
+                            filter="{ codCompra: 'number'}"
+                            sortable="'codCompra'">
+                            {{compras.codCompra}}
+                        </td>
+                        <td title="'Usuário'"
+                            filter="{ usuario: 'text'}"
+                            sortable="'usuario'">
+                            {{compras.usuario}}
+                        </td>
+                        <td title="'Cod. Produto'"
+                            filter="{ codProduto: 'number'}"
+                            sortable="'codProduto'">
+                            {{compras.codProduto}}
+                        </td>
+                        <td title="'Qtd Produtos'">
+                            {{compras.quantidade}}
+                        </td>
+                        <td title="'Valor Compra'">
+                            {{compras.vlrCompra}}
+                        </td>
+                        <td title="'Data do Pedido'">
+                            {{compras.dtaPedido}}
+                        </td>
+                        <td title="'Forma de Pagamento'">
+                            {{compras.formaPagamento}}
+                        </td>
+                        <td title="'Data do Pagamento'">
+                            {{compras.dtaPagamento}}
+                        </td>
+                        <td title="'Status Pagamento'">
+                            {{compras.statusPagamento}}
+                        </td>
+                        <td title="'Data de Envio'">
+                            {{compras.dtaEnvio}}
+                        </td>
+                        <td title="'Status Envio'">
+                            {{compras.statusEnvio}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

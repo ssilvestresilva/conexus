@@ -2,6 +2,8 @@ DROP TABLE IF EXISTS curso_aluno;
 DROP TABLE IF EXISTS curso;
 DROP TABLE IF EXISTS resultado;
 DROP TABLE IF EXISTS resultado_produto;
+DROP TABLE IF EXISTS resultado_compras;
+DROP TABLE IF EXISTS compras;
 DROP TABLE IF EXISTS aluno;
 DROP TABLE IF EXISTS usuario;
 DROP TABLE IF EXISTS produto;
@@ -52,6 +54,7 @@ CREATE TABLE IF NOT EXISTS curso_aluno (
 
 CREATE TABLE IF NOT EXISTS usuario (
 	id SERIAL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
 	email VARCHAR(75) NOT NULL,
 	senha VARCHAR(25) NOT NULL,
 	perfil VARCHAR(25) NOT NULL,
@@ -80,6 +83,41 @@ CREATE TABLE IF NOT EXISTS resultado_produto (
 	last_data_base date NOT NULL,
 	CONSTRAINT fk_produto FOREIGN KEY (id_produto)
 		REFERENCES produto (id) MATCH SIMPLE
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS compras (
+	id SERIAL PRIMARY KEY,
+	cod_compra INTEGER NOT NULL,
+	id_usuario INTEGER NOT NULL,
+	id_produto INTEGER NOT NULL,
+	vlr_compra NUMERIC(5,2) NULL DEFAULT 0,
+	quantidade INTEGER NOT NULL,
+	dta_pedido TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+	forma_pagamento varchar(100) NOT NULL,
+	dta_pagamento TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+	status_pagamento varchar(100) NOT NULL,
+	dta_envio TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+	status_envio varchar(100) NOT NULL,
+	CONSTRAINT fk_produto FOREIGN KEY (id_produto)
+		REFERENCES produto (id) MATCH SIMPLE
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION,
+	CONSTRAINT fk_usuario FOREIGN KEY (id_usuario)
+		REFERENCES usuario (id) MATCH SIMPLE
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS resultado_compras (
+	id SERIAL PRIMARY KEY,
+	id_compra INTEGER NOT NULL,
+	resultado DECIMAL NOT NULL DEFAULT 0.0,
+	dta_criacao TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
+	last_data_base date NOT NULL,
+	CONSTRAINT fk_compras FOREIGN KEY (id_compra)
+		REFERENCES compras (id) MATCH SIMPLE
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION
 );

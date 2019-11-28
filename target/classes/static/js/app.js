@@ -72,6 +72,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: 'ProdutoCtrl',
             controllerAs: 'vm'
         })
+        .state('compras', {
+            url: '/compras',
+            data : {
+                role : 'ADMIN'
+            },
+            parent: 'base',
+            templateUrl: 'views/pages/compras.html',
+            controller: 'ComprasCtrl',
+            controllerAs: 'vm'
+        })
         .state('access-denied', {
             url: '/access-denied',
             templateUrl: '',
@@ -110,6 +120,9 @@ app.constant("CONSTANTS", {
     },
     produto: {
         baseUrl: "api/produto"
+    },
+    compras: {
+        baseUrl: "api/compras"
     }
 });
 
