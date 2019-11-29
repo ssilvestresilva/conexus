@@ -22,10 +22,9 @@ public class ComprasController {
 	
 	@GetMapping
 	public Page<Compras> listar(@RequestParam(required = false) Long id,
-							  @RequestParam(required = false) Integer idUsuario,
 							  @RequestParam(required = false) String nome,
 							  @RequestParam(required = false) Integer idProduto,
-							  @RequestParam(required = false) Integer codProduto,
+							  @RequestParam(required = false) Integer codCompra,
 							  @RequestParam(required = false) Double vlrCompra,
 							  @RequestParam(required = false) Integer quantidade,
 							  @RequestParam(required = false) String dtaPedido,
@@ -38,10 +37,9 @@ public class ComprasController {
 		
 		Compras compras = new Compras()
 				.comId(id)
-				.comIdUsuario(idUsuario)
-				.comNome(nome)
-				.comIdProduto(idProduto)
-				.comCodCompra(codProduto)
+//				.comNome(nome)
+//				.comIdProduto(idProduto)
+				.comCodCompra(codCompra)
 				.comVlrCompra(vlrCompra)
 				.comQuantidade(quantidade)
 				.comDtaPedido(dtaPedido)

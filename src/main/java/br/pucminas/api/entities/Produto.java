@@ -12,11 +12,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.pucminas.api.utils.Utils;
@@ -36,6 +38,9 @@ public class Produto implements Serializable {
 	private Date dtaCriacao;
 	private Date dtaAtualizacao;
 	private Boolean ativo;
+	
+	@JsonBackReference
+	private Set<Compras> compras = new HashSet<>();
 	
 	@JsonIgnore
 	private Set<ResultadoProduto> resultados = new HashSet<>();
@@ -67,6 +72,15 @@ public class Produto implements Serializable {
 
 	public void setCodProduto(Integer codProduto) {
 		this.codProduto = codProduto;
+	}
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "produtos")
+	public Set<Compras> getCompras() {
+		return compras;
+	}
+	
+	public void setCompras(Set<Compras> compras) {
+		this.compras = compras;
 	}
 
 	@Column( name = "descricao", nullable = false)

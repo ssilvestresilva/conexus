@@ -17,9 +17,13 @@ var comprasCtrl = function(NgTableParams, comprasSrv) {
                 return comprasSrv.listar(ngParams).then(function(res) {
                     params.total(res.data.totalPages);
                     var compras = res.data.content;
-                    compras.forEach(a => a.dtaPedido = dayjs(a.dtaPedido).format('DD/MM/YYYY'));
-                    compras.forEach(a => a.dtaPagamento = dayjs(a.dtaPagamento).format('DD/MM/YYYY'));
-                    compras.forEach(a => a.dtaEnvio = dayjs(a.dtaEnvio).format('DD/MM/YYYY'));
+                    compras.forEach(a => {
+                        a.dtaPedido = dayjs(a.dtaPedido).format('DD/MM/YYYY'); 
+                        a.dtaPagamento = dayjs(a.dtaPagamento).format('DD/MM/YYYY');
+                        a.dtaEnvio = dayjs(a.dtaEnvio).format('DD/MM/YYYY');
+                        a.nome = a.usuarios[0].nome;
+                        a.codProduto = a.produtos[0].codProduto;
+                     });
                     return compras;
                 });
             }

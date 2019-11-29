@@ -1,15 +1,22 @@
 package br.pucminas.api.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.pucminas.api.enums.PerfilEnum;
 
@@ -21,8 +28,12 @@ public class Usuario implements Serializable {
 
 	private Long id;
 	private String email;
+	private String nome;
 	private String senha;
 	private PerfilEnum perfil;
+	
+	@JsonBackReference
+	private Set<Compras> compras = new HashSet<>();
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +52,24 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Column(name = "nome", nullable = false)
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "usuarios")
+	public Set<Compras> getCompras() {
+		return compras;
+	}
+
+	public void setCompras(Set<Compras> compras) {
+		this.compras = compras;
 	}
 
 	@Column(name = "senha", nullable = false)

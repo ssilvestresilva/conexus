@@ -12,6 +12,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,10 +32,6 @@ public class Compras implements Serializable {
 
 	private Long id;
 	private Integer codCompra;
-	private Integer idUsuario;
-	private String nome;
-	private Integer idProduto;
-	private Integer codProduto;
 	private Double vlrCompra;
 	private Integer quantidade;
 	private Date dtaPedido;
@@ -41,6 +40,9 @@ public class Compras implements Serializable {
 	private String statusPagamento;
 	private Date dtaEnvio;
 	private String statusEnvio;
+	
+	private Set<Usuario> usuario = new HashSet<>();
+	private Set<Produto> produto = new HashSet<>();
 	
 	@JsonIgnore
 	private Set<ResultadoCompras> resultados = new HashSet<>();
@@ -74,40 +76,34 @@ public class Compras implements Serializable {
 		this.codCompra = codCompra;
 	}
 	
-	@Column( name = "id_usuario", nullable = false)
-	public Integer getIdUsuario() {
-		return idUsuario;
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(	
+		name = "compras_usuario",
+		joinColumns = @JoinColumn(name = "id_compra"),
+		inverseJoinColumns = @JoinColumn(name = "id_usuario")
+	)
+	public Set<Usuario> getUsuarios() {
+		return usuario;
 	}
 
-	public void setIdUsuario(Integer idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	@Column( name = "nome", nullable = false)
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setUsuarios(Set<Usuario> usuario) {
+		this.usuario = usuario;
 	}
 	
-	@Column( name = "id_produto", nullable = false)
-	public Integer getIdProduto() {
-		return idProduto;
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(	
+		name = "produtos_compra",
+		joinColumns = @JoinColumn(name = "id_compra"),
+		inverseJoinColumns = @JoinColumn(name = "id_produto")
+	)
+	public Set<Produto> getProdutos() {
+		return produto;
 	}
 
-	public void setIdProduto(Integer idProduto) {
-		this.idProduto = idProduto;
-	}
-	
-	@Column( name = "cod_produto", nullable = false)
-	public Integer getCodProduto() {
-		return codProduto;
-	}
-
-	public void setCodProduto(Integer codProduto) {
-		this.codProduto = codProduto;
+	public void setProdutos(Set<Produto> produto) {
+		this.produto = produto;
 	}
 
 	@Column( name = "vlr_compra")
@@ -187,21 +183,6 @@ public class Compras implements Serializable {
 		return this;
 	}
 	
-	public Compras comIdUsuario(Integer idUsuario) {
-		this.setIdUsuario(idUsuario);
-		return this;
-	}
-	
-	public Compras comNome(String nome) {
-		this.setNome(nome);
-		return this;
-	}
-	
-	public Compras comIdProduto(Integer codIdProduto) {
-		this.setIdProduto(codIdProduto);
-		return this;
-	}
-	
 	public Compras comCodCompra(Integer codCompra) {
 		this.setCodCompra(codCompra);
 		return this;
@@ -249,9 +230,7 @@ public class Compras implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Compra [id=" + id + ", codCompra=" + codCompra + ", nome=" 
-	+ nome + ", vlrCompra=" + vlrCompra + 
+		return "Compra [id=" + id + ", codCompra=" + codCompra + ", vlrCompra=" + vlrCompra + 
 	", + quantidade=" + quantidade + "]";
 	}
-
 }
