@@ -37,8 +37,6 @@ public class ComprasController {
 		
 		Compras compras = new Compras()
 				.comId(id)
-//				.comNome(nome)
-//				.comIdProduto(idProduto)
 				.comCodCompra(codCompra)
 				.comVlrCompra(vlrCompra)
 				.comQuantidade(quantidade)

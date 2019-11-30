@@ -76,7 +76,7 @@ public class Compras implements Serializable {
 		this.codCompra = codCompra;
 	}
 	
-	@ManyToMany(fetch = FetchType.LAZY,
+	@ManyToMany(fetch = FetchType.EAGER,
 			cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(	
 		name = "compras_usuario",
@@ -91,7 +91,7 @@ public class Compras implements Serializable {
 		this.usuario = usuario;
 	}
 	
-	@ManyToMany(fetch = FetchType.LAZY,
+	@ManyToMany(fetch = FetchType.EAGER,
 			cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(	
 		name = "produtos_compra",

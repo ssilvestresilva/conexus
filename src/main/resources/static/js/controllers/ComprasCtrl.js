@@ -8,7 +8,7 @@ var comprasCtrl = function(NgTableParams, comprasSrv) {
             getData: function(params) {
                 var ngParams = {
                     page: params.page() - 1,
-                    size: 10,
+                    size: 20,
                     sort: 'id,ASC'
                 }
 
@@ -18,9 +18,9 @@ var comprasCtrl = function(NgTableParams, comprasSrv) {
                     params.total(res.data.totalPages);
                     var compras = res.data.content;
                     compras.forEach(a => {
-                        a.dtaPedido = dayjs(a.dtaPedido).format('DD/MM/YYYY'); 
-                        a.dtaPagamento = dayjs(a.dtaPagamento).format('DD/MM/YYYY');
-                        a.dtaEnvio = dayjs(a.dtaEnvio).format('DD/MM/YYYY');
+                        a.dtaPedido = a.dtaPedido != null ? dayjs(a.dtaPedido).format('DD/MM/YYYY') : '-'; 
+                        a.dtaPagamento = a.dtaPagamento != null ? dayjs(a.dtaPagamento).format('DD/MM/YYYY') : '-';
+                        a.dtaEnvio = a.dtaEnvio != null ? dayjs(a.dtaEnvio).format('DD/MM/YYYY') : '-';
                         a.nome = a.usuarios[0].nome;
                         a.codProduto = a.produtos[0].codProduto;
                      });

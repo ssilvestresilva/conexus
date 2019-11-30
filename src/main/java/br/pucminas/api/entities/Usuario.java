@@ -63,7 +63,7 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "usuarios")
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "usuarios")
 	public Set<Compras> getCompras() {
 		return compras;
 	}

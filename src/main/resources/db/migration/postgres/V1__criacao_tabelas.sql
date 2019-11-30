@@ -92,7 +92,6 @@ CREATE TABLE IF NOT EXISTS resultado_produto (
 CREATE TABLE IF NOT EXISTS compras (
 	id SERIAL PRIMARY KEY,
 	cod_compra INTEGER NOT NULL,
-	id_produto INTEGER NOT NULL,
 	vlr_compra NUMERIC(5,2) NULL DEFAULT 0,
 	quantidade INTEGER NOT NULL,
 	dta_pedido TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
@@ -100,11 +99,7 @@ CREATE TABLE IF NOT EXISTS compras (
 	dta_pagamento TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
 	status_pagamento varchar(100) NOT NULL,
 	dta_envio TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
-	status_envio varchar(100) NOT NULL,
-	CONSTRAINT fk_produto FOREIGN KEY (id_produto)
-		REFERENCES produto (id) MATCH SIMPLE
-		ON UPDATE NO ACTION
-		ON DELETE NO ACTION
+	status_envio varchar(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS compras_usuario (

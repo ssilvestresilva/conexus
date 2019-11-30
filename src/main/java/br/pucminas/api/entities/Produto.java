@@ -55,7 +55,7 @@ public class Produto implements Serializable {
 		this.id = id;
 	}
 	
-	@OneToMany(mappedBy = "produto", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<ResultadoProduto> getResultados() {
 		return resultados;
 	}
