@@ -7,6 +7,8 @@ DROP TABLE IF EXISTS produtos_compra;
 DROP TABLE IF EXISTS compras_usuario;
 DROP TABLE IF EXISTS compras;
 DROP TABLE IF EXISTS aluno;
+DROP TABLE IF EXISTS cartoes_usuario;
+DROP TABLE IF EXISTS enderecos_usuario;
 DROP TABLE IF EXISTS usuario;
 DROP TABLE IF EXISTS produto;
 
@@ -57,9 +59,11 @@ CREATE TABLE IF NOT EXISTS curso_aluno (
 CREATE TABLE IF NOT EXISTS usuario (
 	id SERIAL PRIMARY KEY,
 	nome VARCHAR(100) NOT NULL,
+	cpf VARCHAR(75) NOT NULL,
 	email VARCHAR(75) NOT NULL,
-	senha VARCHAR(25) NOT NULL,
-	perfil VARCHAR(25) NOT NULL,
+	senha VARCHAR(75) NOT NULL,
+	perfil VARCHAR(75) NOT NULL,
+	telefone_contato VARCHAR(75) NULL,
 	dta_criacao TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
 );
 
@@ -109,6 +113,30 @@ CREATE TABLE IF NOT EXISTS compras_usuario (
 		REFERENCES compras (id) MATCH SIMPLE
 		ON UPDATE NO ACTION
 		ON DELETE NO ACTION,
+	CONSTRAINT fk_usuario FOREIGN KEY (id_usuario)
+		REFERENCES usuario (id) MATCH SIMPLE
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS enderecos_usuario (
+	id_usuario INTEGER NOT NULL,
+	cidade VARCHAR(75) NULL,
+	cep VARCHAR(75) NULL,
+	rua VARCHAR(75) NULL,
+	numero int4 NULL,
+	favorito bool NULL DEFAULT false,
+	CONSTRAINT fk_usuario FOREIGN KEY (id_usuario)
+		REFERENCES usuario (id) MATCH SIMPLE
+		ON UPDATE NO ACTION
+		ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS cartoes_usuario (
+	id_usuario INTEGER NOT NULL,
+	nome_cartao VARCHAR(75) NULL,
+	numero_cartao int4 NULL,
+	favorito bool NULL DEFAULT false,
 	CONSTRAINT fk_usuario FOREIGN KEY (id_usuario)
 		REFERENCES usuario (id) MATCH SIMPLE
 		ON UPDATE NO ACTION
